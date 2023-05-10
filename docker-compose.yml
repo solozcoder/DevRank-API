@@ -15,7 +15,9 @@ services:
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_PASSWORD=
-      - MYSQL_DBNAME=todolist_api
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=todolist_api
       - SERVICE_TAGS=dev
       - SERVICE_NAME=mysqldb
     networks:

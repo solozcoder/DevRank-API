@@ -1,4 +1,4 @@
-const Response = require("./../../util/response");
+const Response = require("../util/response");
 
 const HttpStatus = {
   SUCCESS: { code: 200, status: "Success", message: "Success" },

@@ -5,6 +5,7 @@ const QUERY = {
     "INSERT INTO todos (title, activity_group_id, is_active) VALUES (?, ?, ?)",
   UPDATE_TODOS:
     "UPDATE todos SET title = ?,  priority = ?, is_active = ? WHERE id = ?",
+  DELETE_TODOS: "DELETE FROM todos WHERE id = ?"
 };
 
 module.exports = QUERY;

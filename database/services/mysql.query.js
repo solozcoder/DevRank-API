@@ -6,13 +6,16 @@ const pool = mysql.createPool({
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DBNAME,
-  connectTimeout: 100000,
+  acquireTimeout: 100000,
+  waitForConnections: true,
 });
 
-pool.getConnection((err, res) => {
-  if (err) return console.log(err);
-  console.log("success connecting to db");
-});
+const isConnected = () => {
+  pool.getConnection((err, res) => {
+    if (err) return setTimeout(isConnected, 1000);
+    return console.log("Connected to db");
+  });
+};
 
 const query = (query, params, callback) => {
   pool.query(query, params, (err, results) => {
@@ -21,4 +24,4 @@ const query = (query, params, callback) => {
   });
 };
 
-module.exports = { query };
+module.exports = { query, isConnected };

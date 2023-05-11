@@ -5,7 +5,7 @@ const ip = require("ip");
 const bodyParser = require("body-parser");
 const logger = require("./util/logger");
 const morgan = require("morgan");
-// const { migration } = require("./../database/services/mysql.query");
+const { isConnected } = require("./../database/services/mysql.query");
 
 var port = process.env.PORT || 3030;
 const app = express();
@@ -28,7 +28,7 @@ app.use("/activity-groups", activityRouter);
 
 const run = async () => {
   try {
-    // await migration();
+    isConnected();
     app.listen(port);
 
     logger.info(`[+] Server is running on: ${ip.address()}:${port}`);

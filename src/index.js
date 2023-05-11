@@ -3,9 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const ip = require("ip");
 const bodyParser = require("body-parser");
-const db = require('./../database/services/mysql.query');
+const logger = require("./util/logger");
 
-let port = process.env.SERVER_PORT || 3030;
+var port = process.env.SERVER_PORT || 3030;
 const app = express();
 
 // Router
@@ -24,6 +24,6 @@ app.use("/todo-items", todoRouter);
 app.use("/activity-groups", activityRouter);
 
 app.listen(port, (err) => {
-  if (err) return console.log("[-] Server Error: " + err);
-  console.log(`[+] Server is running on: ${ip.address()}:${port}`);
+  if (err) return logger.error(`[-] Server Error: ${err}`);
+  logger.info(`[+] Server is running on: ${ip.address()}:${port}`);
 });

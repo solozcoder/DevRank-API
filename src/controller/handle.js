@@ -9,12 +9,15 @@ const HttpStatus = {
   INTERNAL_SERVER_ERROR: { code: 500, status: "INTERNAL_SERVER_ERROR" },
 };
 
-
 const SUCCESS_HANDLE = (req, res, message, Data) => {
   return res
     .status(HttpStatus.SUCCESS.code)
     .json(
-      new Response(HttpStatus.SUCCESS.status, message || HttpStatus.SUCCESS.message, Data)
+      new Response(
+        HttpStatus.SUCCESS.status,
+        message || HttpStatus.SUCCESS.message,
+        Data
+      )
     );
 };
 
@@ -29,6 +32,5 @@ const NOT_FOUND_HANDLE = (req, res, message) => {
     .status(HttpStatus.NOT_FOUND.code)
     .json(new Response(HttpStatus.NOT_FOUND.status, message));
 };
-
 
 module.exports = { SUCCESS_HANDLE, ERROR_HANDLE, NOT_FOUND_HANDLE };

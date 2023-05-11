@@ -1,10 +1,8 @@
 services:
   mysqldb:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: devrank-mysql-container
-    command: >
-      --authentication_policy=mysql_native_password
-      --pid-file=/pid/docker-mysql/mysqld.pid
+    command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     volumes:
       - ./database/init:/docker-entrypoint-initdb.d
@@ -16,9 +14,9 @@ services:
       MYSQL_DATABASE: todolist_api
       MYSQL_USER: rian
       MYSQL_PASSWORD: 303huh303
+      MYSQL_ROOT_PASSWORD: ""
       SERVICE_TAGS: development
       SERVICE_NAME: mysqldb
-      MYSQL_ROOT_PASSWORD:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
     networks:
@@ -26,22 +24,20 @@ services:
 
   nodeapp:
     container_name: devrank-nodejs-container
-    build: .
-    image: node:lts-slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: node:alpine
     ports:
       - 3030:3030
     expose:
       - 3030
     environment:
-      DB_HOST: mysqldb
-      DB_PORT: 3306
-      DB_USER: "rian"
-      DB_PASSWORD: "303huh303"
-      DB_NAME: todolist_api
-      NODE_ENV: production
-      SERVICE_TAGS: production
-      SERVICE_NAME: nodeappservice
-      SERVER_PORT: 3030
+      MYSQL_HOST: mysqldb
+      MYSQL_PORT: 3306
+      MYSQL_USER: "rian"
+      MYSQL_PASSWORD: "303huh303"
+      MYSQL_DBNAME: todolist_api
     depends_on:
       - mysqldb
     networks:

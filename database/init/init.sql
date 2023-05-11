@@ -26,6 +26,30 @@ CREATE TABLE activities (
 );
 
 DELIMITER $$
+
+  CREATE PROCEDURE MIGRATION_TABLE ()
+  BEGIN
+    CREATE TABLE IF NOT EXISTS todos (
+      id                  INT(11) NOT NULL AUTO_INCREMENT,
+      activity_group_id   INT(11) NOT NULL,
+      title               VARCHAR(255) NOT NULL,
+      is_active           BOOLEAN NOT NULL,
+      priority            VARCHAR(255) NOT NULL DEFAULT 'very-high',
+      createdAt           DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updateAt            DATETIME ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id)
+    );
+
+    CREATE TABLE IF NOT EXISTS activities (
+      id            INT(11) NOT NULL AUTO_INCREMENT,
+      title         VARCHAR(255) NOT NULL,
+      email         VARCHAR(255) NOT NULL,
+      createdAt     DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updateAt      DATETIME ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id)
+    );
+  END$$
+
   CREATE PROCEDURE TODOS_CREATE_RETURN (
     IN p_title VARCHAR(255),
     IN p_activity_group_id INT(11),

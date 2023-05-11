@@ -7,7 +7,6 @@ const { SUCCESS_HANDLE, ERROR_HANDLE, NOT_FOUND_HANDLE } = require("./handle");
 // Query All todo
 const GET_ALL_TODO = (req, res) => {
   logger.info(`${req.method} ${req.originalUrl}, Query All Todos`);
-  console.log("ad");
 
   db.query(QUERY.SELECT_ALL_TODOS, [], (err, Data) => {
     if (err) {

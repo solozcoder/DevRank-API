@@ -4,3 +4,6 @@ node_modules
 README.md
 .vscode
 LICENSE
+npm-debug.log
+build
+docker-mod
